@@ -9,14 +9,14 @@
 <div class="container">
     <div class="row">
         <!-- aqui se haría el for de usuarios !-->
-        {% for musico in musicos %}
+        {% for banda in bandas %}
             <div class="col-lg-4">
-                <img class="rounded-circle" src="{{ asset('/imagenes/') }}/{{ musico.foto }}" alt="Generic placeholder image" width="140" height="140">
-                <a href="{{ path('ver_usuario',{id:musico.id}) }}"><h2>{{ musico.nombre }} {{ musico.apellidos }}</h2></a>
+                <img class="rounded-circle" src="{{ asset('/imagenes/') }}/{{ banda.foto }}" alt="Generic placeholder image" width="140" height="140">
+                <a href="{{ path('ver_usuario',{id:banda.id}) }}"><h2>{{ banda.nombre }} {{ banda.apellidos }}</h2></a>
                 <p><a class="btn btn-primary" href="#" role="button">Ver perfil</a></p>
             </div>
         {% else %}
-            <p>No se ha encontrado ningún músico.</p>
+            <p>No se ha encontrado ninguna banda.</p>
         {% endfor %}
     </div>
 </div>

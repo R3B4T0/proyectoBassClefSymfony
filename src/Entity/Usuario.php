@@ -41,6 +41,26 @@ class Usuario implements UserInterface
      */
     private $videos;
 
+    /**
+     * @ORM\Column(type="string", length=200)
+     */
+    private $nombre;
+
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $apellidos;
+
+    /**
+     * @ORM\Column(type="string", length=200)
+     */
+    private $foto;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $DatosInteres;
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
@@ -153,6 +173,54 @@ class Usuario implements UserInterface
                 $video->setUsuario(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(?string $apellidos): self
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(string $foto): self
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getDatosInteres(): ?string
+    {
+        return $this->DatosInteres;
+    }
+
+    public function setDatosInteres(?string $DatosInteres): self
+    {
+        $this->DatosInteres = $DatosInteres;
 
         return $this;
     }
