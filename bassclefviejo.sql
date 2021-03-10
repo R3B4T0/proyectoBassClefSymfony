@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-03-2021 a las 14:35:51
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.10
+-- Tiempo de generación: 04-03-2021 a las 19:42:45
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,9 +40,7 @@ CREATE TABLE `doctrine_migration_versions` (
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 ('DoctrineMigrations\\Version20210304171211', '2021-03-04 18:13:01', 48),
 ('DoctrineMigrations\\Version20210304171748', '2021-03-04 18:18:17', 53),
-('DoctrineMigrations\\Version20210304173817', '2021-03-04 18:38:45', 170),
-('DoctrineMigrations\\Version20210309111204', '2021-03-09 12:12:28', 48),
-('DoctrineMigrations\\Version20210309111353', '2021-03-09 12:14:01', 40);
+('DoctrineMigrations\\Version20210304173817', '2021-03-04 18:38:45', 170);
 
 -- --------------------------------------------------------
 
@@ -69,11 +67,7 @@ CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellidos` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `foto` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `datos_interes` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
