@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Usuario;
-use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -47,7 +47,7 @@ class UsuarioController extends AbstractController
                         ])
                     ]
                 ])
-                ->add('roles', ChoiceType::class, ['label' => 'Selecciona un rol: '], array(
+                ->add('roles', ChoiceType::class, array(
                     'attr' => array('class' => 'form-control',
                     'style' => 'margin: 10px 10px'),
                     'choices' => array(

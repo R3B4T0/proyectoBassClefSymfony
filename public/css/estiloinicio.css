@@ -9,3 +9,7 @@
 div {
     display: block;
 }
+
+body {
+    background-color:rgba(156, 182, 217, 0.76);
+}
