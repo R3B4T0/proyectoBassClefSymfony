@@ -36,6 +36,23 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->_em->flush();
     }
 
+    /**
+     * @return Usuario[]
+     */
+    public function buscarRol(int $id): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT roles
+            FROM App\Entity\Usuario r
+            WHERE r.id = :id'
+        )->setParameter('id', $id);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Usuario[] Returns an array of Usuario objects
     //  */

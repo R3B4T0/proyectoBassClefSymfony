@@ -28,7 +28,7 @@
                             <h1>Login</h1>
                         </div>
                     </div>
-                    <form action="" method="post" name="login">
+                    <form method="POST">
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                         {% endif %}
@@ -39,25 +39,25 @@
                         {% endif %}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" name="email" value="{{ last_username }}" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Introduzca Email">
+                            <input type="email" name="email" value="{{ last_username }}" class="form-control" id="email" placeholder="Introduzca Email">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Contraseña</label>
-                            <input type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca Contraseña">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Introduzca Contraseña">
                         </div>
                         <input type="hidden" name="_csrf_token"
                             value="{{ csrf_token('authenticate') }}"
                         >
                         <div class="checkbox mb-3">
                             <label>
-                                <input type="checkbox" name="_remember_me"> Recordar usuario
+                                <input type="checkbox" id="remember_me" name="_remember_me"> Recordar usuario
                             </label>
                         </div>
                         <div class="form-group">
                             <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
                         </div>
                         <div class="col-md-12 text-center ">
-                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                            <button type="submit" value="Login" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
                         </div>
                         <div class="col-md-12 ">
                             <div class="login-or">

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Usuario;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -35,11 +35,10 @@ class UsuarioController extends AbstractController
                 ->add('foto', FileType::class, [
                     'label' => 'Selecciona una foto',
                     'constraints' => [
-                        new File([
+                        new File ([
                             'maxSize' => '1024k',
                             'mimeTypes' => [
                                 'image/jpeg',
-                                'image/jpg',
                                 'image/png',
                                 'image/gif'
                             ],
@@ -49,8 +48,10 @@ class UsuarioController extends AbstractController
                 ])
                 ->add('roles', ChoiceType::class, array(
                     'attr' => array('class' => 'form-control',
-                    'style' => 'margin: 10px 10px'),
-                    'choices' => array(
+                    'style' => 'margin:10px 10px;'),
+                    'choices' => 
+                    array
+                    (
                         'ROLE_MUSICO' => array
                         (
                             'Músico' => 'ROLE_MUSICO',
@@ -75,7 +76,7 @@ class UsuarioController extends AbstractController
             $usuario = $form->getData();
             $foto = $form->get('foto')->getData();
             if ($foto) {
-                $nuevo_nombre = uniqid() . ' . ' . $foto->guessExtension();
+                $nuevo_nombre = uniqid() . '.' . $foto->guessExtension();
                 try {
                     $foto->move('imagenes/', $nuevo_nombre);
                     $usuario->setFoto($nuevo_nombre);
@@ -87,7 +88,7 @@ class UsuarioController extends AbstractController
             //Codificamos el password
             $usuario->setPassword($encoder->encodePassword($usuario, $usuario->getPassword()));
 
-            //Guardamos el nuevo artículo en la base de datos
+            //Guardamos el nuevo usuario en la base de datos
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
             $em->flush();
@@ -111,7 +112,7 @@ class UsuarioController extends AbstractController
     {
         $repositorio = $this->getDoctrine()->getRepository(Usuario::class);
         $musicos = $repositorio->findBy(
-            array('roles' => 'ROLE_MUSICO'),
+            array('roles' => '%ROLE_MUSICO%'),
         );
         return $this->render('usuario/index.html.twig',
                         ['musicos' => $musicos]);
