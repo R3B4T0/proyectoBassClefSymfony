@@ -11,6 +11,8 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,400;1,500;1,600;1,700&amp;family=Truculenta:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -38,8 +40,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             {% if app.user %}
-                                <a class="dropdown-item" href='/perfil' routerLinkActive="active text-dark sombra"><img src="imagenes/{{app.user.foto}}" height="50px"> {{app.user.nombre}} {{app.user.apellidos}}</a>
-                                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout <i class="fas fa-sign-out-alt" routerLinkActive='fa-spin'></i></a>
+                                <a class="dropdown-item" href='/ver_perfil/{{ app.user.id }}' routerLinkActive="active text-dark sombra"><img class="rounded-circle" src="{{ asset('/imagenes/') }}/{{ app.user.foto }}" height="50px" width="50px"> {{app.user.nombre}} {{app.user.apellidos}}</a>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar Sesión <i class="fas fa-sign-out-alt" routerLinkActive='fa-spin'></i></a>
                             {% else %}
                                 <a class="dropdown-item" href="/registrar" routerLinkActive="active text-dark sombra">Registro</a>
                                 <a class="dropdown-item" href='/login' routerLinkActive="active text-dark sombra">Login</a>

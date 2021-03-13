@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block head %}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="{{ asset('/css/estiloregistro.css') }}" type="text/css">
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="form">
+        <div class="note">
+            <img src="{{ asset('/imagenes/navegacion.png') }}">
+        </div>
+
+        <div class="form-content">
+            <div class="row">
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

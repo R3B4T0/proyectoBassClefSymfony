@@ -1,0 +1,12 @@
+.card-header {
+    background: -webkit-linear-gradient(left, #e66465, #9198e5);
+    font-family: 'Pacifico', cursive;
+}
+
+body {
+    background-color:rgba(156, 182, 217, 0.76);
+}
+
+.card-body h4 {
+    font-family: 'Pacifico', cursive;
+}

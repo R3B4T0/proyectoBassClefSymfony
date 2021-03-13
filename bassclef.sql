@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-03-2021 a las 14:35:51
+-- Tiempo de generación: 13-03-2021 a las 22:42:16
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -42,7 +42,8 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20210304171748', '2021-03-04 18:18:17', 53),
 ('DoctrineMigrations\\Version20210304173817', '2021-03-04 18:38:45', 170),
 ('DoctrineMigrations\\Version20210309111204', '2021-03-09 12:12:28', 48),
-('DoctrineMigrations\\Version20210309111353', '2021-03-09 12:14:01', 40);
+('DoctrineMigrations\\Version20210309111353', '2021-03-09 12:14:01', 40),
+('DoctrineMigrations\\Version20210312120300', '2021-03-12 13:03:23', 264);
 
 -- --------------------------------------------------------
 
@@ -72,9 +73,19 @@ CREATE TABLE `usuario` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `apellidos` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `foto` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `datos_interes` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `foto` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `datos_interes` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `email`, `roles`, `password`, `nombre`, `apellidos`, `foto`, `datos_interes`, `telefono`) VALUES
+(1, 'd@d.com', '[\"ROLE_MUSICO\"]', '$argon2id$v=19$m=65536,t=4,p=1$WmpoM0F2ancudUJJTmRMYQ$TOX9xQ8K3KmcYLIxe7EP4+e0rKO/dukxg3N+FNUrpTc', 'David', 'Rebato Diana', '604caf7775bbd.jpg', 'fdghjfgkfghkfdgjdfgj\r\nHioolasdfjkasdfjkh', '625010025'),
+(2, 'banda@b.com', '[\"ROLE_BANDA\"]', '$argon2id$v=19$m=65536,t=4,p=1$bnQ1SVFjN0dWVmx4V2p4Vg$Js3RxIRrd0Zc+uURsUcsJWaiyXK0jaL1wrpJNy0jeLs', 'Tres Caídas de Triana', NULL, '604cd6ab39929.jpg', NULL, NULL),
+(3, 'a@o.com', '[\"ROLE_MUSICO\"]', '$argon2id$v=19$m=65536,t=4,p=1$NzE3enNpR0xpOG1USi5HTg$ZaWi3mCMj7wn7D8fIuiVXIWka6egIZQT/SDQUSC5+kc', 'Andrea', 'Ortega', 'pomerania.png', NULL, '623456789');
 
 -- --------------------------------------------------------
 
@@ -87,6 +98,15 @@ CREATE TABLE `video` (
   `usuario_id` int(11) NOT NULL,
   `codigo` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `video`
+--
+
+INSERT INTO `video` (`id`, `usuario_id`, `codigo`) VALUES
+(1, 1, '-CGKIBwe83c'),
+(2, 1, 'o0DoTL54DXo'),
+(6, 1, 'MeWGJWZ_jVo');
 
 --
 -- Índices para tablas volcadas
@@ -132,13 +152,13 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `video`
 --
 ALTER TABLE `video`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

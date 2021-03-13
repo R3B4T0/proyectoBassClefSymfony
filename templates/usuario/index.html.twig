@@ -9,14 +9,14 @@
 
 
 {% block body %}
-<div class="container">
+<div class="container marketing">
     <div class="row">
-        <!-- aqui se haría el for de usuarios !-->
+        <!-- aquí se haría el for de músicos !-->
         {% for musico in musicos %}
             <div class="col-lg-4">
                 <img class="rounded-circle" src="{{ asset('/imagenes/') }}/{{ musico.foto }}" alt="Generic placeholder image" width="140" height="140">
-                <a href="{{ path('ver_usuario',{id:musico.id}) }}"><h2>{{ musico.nombre }} {{ musico.apellidos }}</h2></a>
-                <p><a class="btn btn-primary" href="#" role="button">Ver perfil</a></p>
+                <h2>{{ musico.nombre }} {{ musico.apellidos }}</h2>
+                <p><a class="btn btn-primary" href="{{ path('ver_perfil',{id:musico.id}) }}" role="button">Ver perfil</a></p>
             </div>
         {% else %}
             <p>No se ha encontrado ningún músico.</p>

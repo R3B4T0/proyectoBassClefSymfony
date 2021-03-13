@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usuario;
+use App\Entity\Video;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UsuarioController extends AbstractController
 {
@@ -110,10 +112,7 @@ class UsuarioController extends AbstractController
      */
     public function index(): Response
     {
-        $repositorio = $this->getDoctrine()->getRepository(Usuario::class);
-        $musicos = $repositorio->findBy(
-            array('roles' => '%ROLE_MUSICO%'),
-        );
+        $musicos = $this->getDoctrine()->getRepository(Usuario::class)->getMusicos();
         return $this->render('usuario/index.html.twig',
                         ['musicos' => $musicos]);
     }
@@ -123,10 +122,7 @@ class UsuarioController extends AbstractController
      */
     public function bandas(): Response
     {
-        $repositorio = $this->getDoctrine()->getRepository(Usuario::class);
-        $bandas = $repositorio->findBy(
-            array('roles' => 'ROLE_BANDA'),
-        );
+        $bandas = $this->getDoctrine()->getRepository(Usuario::class)->getBandas();
         return $this->render('usuario/bandas.html.twig',
                         ['bandas' => $bandas]);
     }
@@ -135,10 +131,11 @@ class UsuarioController extends AbstractController
      * @Route("/ver_perfil/{id}", name="ver_perfil", requirements={"id"="\d+"})
      * @param int $id
      */
-    public function ver_perfil(Usuario $usuario): Response
+    public function ver_perfil(Usuario $perfil): Response
     {
+        $videos = $this->getDoctrine()->getRepository(Video::class)->getVideos($perfil->getId());
         return $this->render('usuario/ver_usuario.html.twig',
-                        ['usuario' => $usuario]);
+                        ['perfil' => $perfil, 'videos' => $videos]);
     }
 
     /**
@@ -157,5 +154,74 @@ class UsuarioController extends AbstractController
             'Perfil borrado correctamente.'
         );
         return $this->redirectToRoute('inicio');
+    }
+
+    /**
+     * @Route("/editar_perfil/{id}", name="editar_perfil")
+     * @IsGranted("ROLE_USER")
+     * Method(("GET", "POST"))
+     */
+    public function editar_perfil(Request $request, int $id): Response
+    {
+        $perfil = new Usuario();
+        $perfil = $this->getDoctrine()->getRepository(Usuario::class)->find($id);
+        
+        $form = $this->createFormBuilder($perfil)
+        ->add('email', TextType::class)
+        ->add('nombre', TextType::class)
+        ->add('apellidos', TextType::class)
+        ->add('telefono', TextType::class)
+        /*->add('foto', FileType::class, [
+            'label' => 'Selecciona una foto',
+            'required' => false,
+            'data_class' => null,
+            'constraints' => [
+                new File ([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/gif'
+                    ],
+                    'mimeTypesMessage' => 'Formato de archivo no válido.',
+                ])
+            ]
+        ])*/
+        ->add('datosInteres', TextareaType::class)
+        ->add('Guardar', SubmitType::class,
+        array(
+            'attr' => array('class' => 'btn btn-primary btn-block', 'label' => 'Editar Perfil')
+        ))
+        ->getForm();
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $perfil = $form->getData();
+            /*$foto = $form->get('foto')->getData();
+            if ($foto) {
+                $nuevo_nombre = uniqid() . '.' . $foto->guessExtension();
+                try {
+                    $foto->move('imagenes/', $nuevo_nombre);
+                    $perfil->setFoto($nuevo_nombre);
+                } catch (FileException $e) {
+                    
+                }
+            }*/
+
+            //Guardamos el perfil editado en la base de datos
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($perfil);
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                'Usuario editado correctamente!'
+            );
+
+            return $this->redirectToRoute('ver_perfil', ['id' => $perfil->getId()]);
+        }
+
+        return $this->render('usuario/editar_perfil.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

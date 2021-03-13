@@ -36,21 +36,36 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->_em->flush();
     }
 
-    /**
-     * @return Usuario[]
-     */
-    public function buscarRol(int $id): array
+    public function getMusicos(): array
     {
-        $entityManager = $this->getEntityManager();
+        $conn = $this->getEntityManager()->getConnection();
 
-        $query = $entityManager->createQuery(
-            'SELECT roles
-            FROM App\Entity\Usuario r
-            WHERE r.id = :id'
-        )->setParameter('id', $id);
+        $sql = '
+            SELECT *
+            FROM usuario u
+            WHERE u.roles LIKE "%ROLE_MUSICO%"';
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
 
         // returns an array of Product objects
-        return $query->getResult();
+        return $stmt->fetchAllAssociative();
+    }
+
+    public function getBandas(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT *
+            FROM usuario u
+            WHERE u.roles LIKE "%ROLE_BANDA%"';
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of Product objects
+        return $stmt->fetchAllAssociative();
     }
 
     // /**
