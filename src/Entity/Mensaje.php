@@ -18,33 +18,54 @@ class Mensaje
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Conversacion::class, inversedBy="mensajes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $conversacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="mensajes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $usuario;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $mensaje;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $leido;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $fecha;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_remitente;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_destinatario;
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getConversacion(): ?Conversacion
+    {
+        return $this->conversacion;
+    }
+
+    public function setConversacion(?Conversacion $conversacion): self
+    {
+        $this->conversacion = $conversacion;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
     }
 
     public function getMensaje(): ?string
@@ -59,18 +80,6 @@ class Mensaje
         return $this;
     }
 
-    public function getLeido(): ?bool
-    {
-        return $this->leido;
-    }
-
-    public function setLeido(bool $leido): self
-    {
-        $this->leido = $leido;
-
-        return $this;
-    }
-
     public function getFecha(): ?\DateTimeInterface
     {
         return $this->fecha;
@@ -79,30 +88,6 @@ class Mensaje
     public function setFecha(\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
-
-        return $this;
-    }
-
-    public function getIdRemitente(): ?int
-    {
-        return $this->id_remitente;
-    }
-
-    public function setIdRemitente(int $id_remitente): self
-    {
-        $this->id_remitente = $id_remitente;
-
-        return $this;
-    }
-
-    public function getIdDestinatario(): ?int
-    {
-        return $this->id_destinatario;
-    }
-
-    public function setIdDestinatario(int $id_destinatario): self
-    {
-        $this->id_destinatario = $id_destinatario;
 
         return $this;
     }

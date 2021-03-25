@@ -66,9 +66,20 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Participante::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $participante;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="usuario", orphanRemoval=true)
+     */
+    private $mensajes;
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        $this->mensajes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,6 +249,53 @@ class Usuario implements UserInterface
     public function setTelefono(?string $telefono): self
     {
         $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getParticipante(): ?Participante
+    {
+        return $this->participante;
+    }
+
+    public function setParticipante(Participante $participante): self
+    {
+        // set the owning side of the relation if necessary
+        if ($participante->getUser() !== $this) {
+            $participante->setUser($this);
+        }
+
+        $this->participante = $participante;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mensaje[]
+     */
+    public function getMensajes(): Collection
+    {
+        return $this->mensajes;
+    }
+
+    public function addMensaje(Mensaje $mensaje): self
+    {
+        if (!$this->mensajes->contains($mensaje)) {
+            $this->mensajes[] = $mensaje;
+            $mensaje->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMensaje(Mensaje $mensaje): self
+    {
+        if ($this->mensajes->removeElement($mensaje)) {
+            // set the owning side to null (unless already changed)
+            if ($mensaje->getUsuario() === $this) {
+                $mensaje->setUsuario(null);
+            }
+        }
 
         return $this;
     }
