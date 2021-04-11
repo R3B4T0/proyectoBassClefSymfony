@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Conversacion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,8 +27,10 @@ class ConversacionRepository extends ServiceEntityRepository
             ->select($qb->expr()->count('p.conversacion'))
             ->innerJoin('c.participantes', 'p')
             ->where(
-                $qb->expr()->eq('p.usuario', ':yo'),
-                $qb->expr()->eq('p.usuario', ':otroUsuario')
+                $qb->expr()->orX(
+                    $qb->expr()->eq('p.usuario', ':yo'),
+                    $qb->expr()->eq('p.usuario', ':otroUsuario')
+                )
             )
             ->groupBy('p.converacion')
             ->having(
@@ -41,6 +44,42 @@ class ConversacionRepository extends ServiceEntityRepository
             ]);
         
         return $qb->getQuery()->getResult();
+    }
+
+    private function findConversacionesByUsuarios (int $usuarioId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->
+            select('otroUsuario.nombre', 'c.id as conversacionId', 'um.content', 'um.createdAt')
+            ->innerJoin('c.participantes', 'p', Join::WITH, $qb->expr()->neq('p.usuario', ':usuario'))
+            ->innerJoin('c.participantes', 'yo', Join::WITH, $qb->expr()->eq('yo.usuario', ':usuario'))
+            ->leftJoin('c.ultimoMensaje', 'um')
+            ->innerJoin('yo.usuario', 'yoUsuario')
+            ->innerJoin('p.usuario', 'otroUsuario')
+            ->where('yoUsuario.id = :usuario')
+            ->setParameter('usuario', $usuarioId)
+            ->orderBy('um.createdAt', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function checkIfUsuarioesParticipante(int $conversacionId, int $usuarioId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->
+            innerJoin('c.participantes', 'p')
+            ->where('c.id = :conversacionId')
+            ->andWhere(
+                $qb->expr()->eq('p.usuario', ':usuarioId')
+            )
+            ->setParameters([
+                'conversacionId' => $conversacionId,
+                'usuarioId' => $usuarioId
+            ])
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     // /**

@@ -41,14 +41,14 @@ class ConversacionController extends AbstractController
     }
 
     /**
-     * @Route("/", name="getConversaciones")
+     * @Route("/", name="nuevasConversaciones", methods={"POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index(Request $request, int $id)
+    public function index(Request $request)
     {
         $otroUsuario = $request->get('otherUser', 0);
-        $otroUsuario = $this->usuarioRepository->find($id);
+        $otroUsuario = $this->usuarioRepository->find($otroUsuario);
 
         if (is_null($otroUsuario)) {
             throw new \Exception("No se encuentra el usuario.");
@@ -73,11 +73,11 @@ class ConversacionController extends AbstractController
 
         $participante = new Participante();
         $participante->setUser($this->getUser());
-        $participante->setConversacion($conversacion);
+        $participante->addConversacion($conversacion);
 
         $otroParticipante = new Participante();
         $otroParticipante->setUser($otroUsuario);
-        $otroParticipante->setConversacion($conversacion);
+        $otroParticipante->addConversacion($conversacion);
 
         $this->entityManager->getConnection()->beginTransaction();
         try {
@@ -93,6 +93,17 @@ class ConversacionController extends AbstractController
         }
         $this->entityManager->commit();
 
-        return $this->json();
+        return $this->json([
+            'id' => $conversacion->getId()
+        ], Response::HTTP_CREATED, [], []);
+    }
+
+    /**
+     * @Route("/", name="getConversaciones", methods={"GET"})
+     */
+    public function getConvs()
+    {
+        $conversacion = $this->conversacionRepository->findConversacionesByUsuarios($this->getUser()->getId());
+        return $this->json($conversacion);
     }
 }

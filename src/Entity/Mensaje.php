@@ -39,6 +39,8 @@ class Mensaje
      */
     private $fecha;
 
+    private $mio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,5 +92,21 @@ class Mensaje
         $this->fecha = $fecha;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMio()
+    {
+        return $this->mio;
+    }
+
+    /**
+     * @param mixed $mio
+     */
+    public function setMio($mio): void
+    {
+        $this->mio = $mio;
     }
 }

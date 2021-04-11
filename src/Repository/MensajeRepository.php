@@ -47,4 +47,16 @@ class MensajeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findMensajeByConversacionId(int $conversacionId)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->
+            where('m.conversacion = :conversacionId')
+            ->setParameter('conversacionId', $conversacionId)
+            ->orderBy('m.id', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
