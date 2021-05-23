@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Conversacion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\AST\Join;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,7 +20,7 @@ class ConversacionRepository extends ServiceEntityRepository
         parent::__construct($registry, Conversacion::class);
     }
 
-    private function findConversacionByParticipantes(int $otroUsuarioId, int $miId)
+    public function findConversacionByParticipantes(?int $otroUsuarioId, $miId)
     {
         $qb = $this->createQueryBuilder('c');
         $qb
@@ -32,7 +32,7 @@ class ConversacionRepository extends ServiceEntityRepository
                     $qb->expr()->eq('p.usuario', ':otroUsuario')
                 )
             )
-            ->groupBy('p.converacion')
+            ->groupBy('p.conversacion')
             ->having(
                 $qb->expr()->eq(
                     $qb->expr()->count('p.conversacion'), 2
@@ -46,11 +46,11 @@ class ConversacionRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function findConversacionesByUsuarios (int $usuarioId)
+    public function findConversacionesByUsuario (int $usuarioId)
     {
         $qb = $this->createQueryBuilder('c');
         $qb->
-            select('otroUsuario.nombre', 'c.id as conversacionId', 'um.content', 'um.createdAt')
+            select('otroUsuario.nombre', 'c.id as conversacionId', 'um.contenido', 'um.creadoEl')
             ->innerJoin('c.participantes', 'p', Join::WITH, $qb->expr()->neq('p.usuario', ':usuario'))
             ->innerJoin('c.participantes', 'yo', Join::WITH, $qb->expr()->eq('yo.usuario', ':usuario'))
             ->leftJoin('c.ultimoMensaje', 'um')
@@ -58,17 +58,17 @@ class ConversacionRepository extends ServiceEntityRepository
             ->innerJoin('p.usuario', 'otroUsuario')
             ->where('yoUsuario.id = :usuario')
             ->setParameter('usuario', $usuarioId)
-            ->orderBy('um.createdAt', 'DESC')
+            ->orderBy('um.creadoEl', 'DESC')
         ;
 
         return $qb->getQuery()->getResult();
     }
 
-    public function checkIfUsuarioesParticipante(int $conversacionId, int $usuarioId)
+    public function checkIfUsuarioEsParticipante(int $conversacionId, int $usuarioId)
     {
         $qb = $this->createQueryBuilder('c');
-        $qb->
-            innerJoin('c.participantes', 'p')
+        $qb
+            ->innerJoin('c.participantes', 'p')
             ->where('c.id = :conversacionId')
             ->andWhere(
                 $qb->expr()->eq('p.usuario', ':usuarioId')

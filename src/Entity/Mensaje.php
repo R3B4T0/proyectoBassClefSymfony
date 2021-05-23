@@ -4,12 +4,17 @@ namespace App\Entity;
 
 use App\Repository\MensajeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass=MensajeRepository::class)
+ * @ORM\Table(indexes={@Index(name="creado_el_index", columns={"creado_el"})})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Mensaje
 {
+    use Timestamp;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -18,32 +23,51 @@ class Mensaje
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Conversacion::class, inversedBy="mensajes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="text")
      */
-    private $conversacion;
+    private $contenido;
 
     /**
      * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="mensajes")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $usuario;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\ManyToOne(targetEntity=Conversacion::class, inversedBy="mensajes")
      */
-    private $mensaje;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $fecha;
+    private $conversacion;
 
     private $mio;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getContenido(): ?String
+    {
+        return $this->contenido;
+    }
+
+    public function setContenido(String $contenido): self
+    {
+        $this->contenido = $contenido;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+        
+        return $this;
     }
 
     public function getConversacion(): ?Conversacion
@@ -54,42 +78,6 @@ class Mensaje
     public function setConversacion(?Conversacion $conversacion): self
     {
         $this->conversacion = $conversacion;
-
-        return $this;
-    }
-
-    public function getUsuario(): ?Usuario
-    {
-        return $this->usuario;
-    }
-
-    public function setUsuario(?Usuario $usuario): self
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    public function getMensaje(): ?string
-    {
-        return $this->mensaje;
-    }
-
-    public function setMensaje(string $mensaje): self
-    {
-        $this->mensaje = $mensaje;
-
-        return $this;
-    }
-
-    public function getFecha(): ?\DateTimeInterface
-    {
-        return $this->fecha;
-    }
-
-    public function setFecha(\DateTimeInterface $fecha): self
-    {
-        $this->fecha = $fecha;
 
         return $this;
     }

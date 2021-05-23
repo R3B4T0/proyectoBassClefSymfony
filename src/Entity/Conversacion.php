@@ -6,9 +6,11 @@ use App\Repository\ConversacionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass=ConversacionRepository::class)
+ * @ORM\Table(indexes={@Index(name="ultimo_mensaje_id_index", columns={"ultimo_mensaje_id"})})
  */
 class Conversacion
 {
@@ -20,24 +22,24 @@ class Conversacion
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="conversacion", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Participante::class, mappedBy="conversacion")
      */
-    private $ultimo_mensaje_id;
+    private $participantes;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participante::class, inversedBy="conversacion")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="Mensaje")
+     * @ORM\JoinColumn(name="ultimo_mensaje_id", referencedColumnName="id")
      */
-    private $participante;
+    private $ultimoMensaje;
 
     /**
-     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="conversacion", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="conversacion")
      */
     private $mensajes;
 
     public function __construct()
     {
-        $this->ultimo_mensaje_id = new ArrayCollection();
+        $this->participantes = new ArrayCollection();
         $this->mensajes = new ArrayCollection();
     }
 
@@ -47,43 +49,44 @@ class Conversacion
     }
 
     /**
-     * @return Collection|Mensaje[]
+     * @return Collection|Participante[]
      */
-    public function getUltimoMensajeId(): Collection
+    public function getParticipantes(): Collection
     {
-        return $this->ultimo_mensaje_id;
+        return $this->participantes;
     }
 
-    public function addUltimoMensajeId(Mensaje $ultimoMensajeId): self
+    public function addParticipante(Participante $participante): self
     {
-        if (!$this->ultimo_mensaje_id->contains($ultimoMensajeId)) {
-            $this->ultimo_mensaje_id[] = $ultimoMensajeId;
-            $ultimoMensajeId->setConversacion($this);
+        if (!$this->participantes->contains($participante)) {
+            $this->participantes[] = $participante;
+            $participante->setConversacion($this);
         }
 
         return $this;
     }
 
-    public function removeUltimoMensajeId(Mensaje $ultimoMensajeId): self
+    public function removeParticipante(Participante $participante): self
     {
-        if ($this->ultimo_mensaje_id->removeElement($ultimoMensajeId)) {
+        if ($this->participantes->contains($participante)) {
+            $this->participantes->removeElement($participante);
             // set the owning side to null (unless already changed)
-            if ($ultimoMensajeId->getConversacion() === $this) {
-                $ultimoMensajeId->setConversacion(null);
+            if ($participante->getConversacion() === $this) {
+                $participante->setConversacion(null);
             }
         }
 
         return $this;
     }
 
-    public function getParticipante(): ?Participante
+    public function getUltimoMensaje(): ?Mensaje
     {
-        return $this->participante;
+        return $this->ultimoMensaje;
     }
 
-    public function setParticipante(?Participante $participante): self
+    public function setUltimoMensaje(?Mensaje $ultimoMensaje): self
     {
-        $this->participante = $participante;
+        $this->ultimoMensaje = $ultimoMensaje;
 
         return $this;
     }
@@ -108,7 +111,8 @@ class Conversacion
 
     public function removeMensaje(Mensaje $mensaje): self
     {
-        if ($this->mensajes->removeElement($mensaje)) {
+        if ($this->mensajes->contains($mensaje)) {
+            $this->mensajes->removeElement($mensaje);
             // set the owning side to null (unless already changed)
             if ($mensaje->getConversacion() === $this) {
                 $mensaje->setConversacion(null);

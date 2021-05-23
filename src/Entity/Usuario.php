@@ -67,12 +67,12 @@ class Usuario implements UserInterface
     private $telefono;
 
     /**
-     * @ORM\OneToOne(targetEntity=Participante::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Participante::class, mappedBy="usuario")
      */
-    private $participante;
+    private $participantes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="usuario", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Mensaje::class, mappedBy="usuario")
      */
     private $mensajes;
 
@@ -80,6 +80,7 @@ class Usuario implements UserInterface
     {
         $this->videos = new ArrayCollection();
         $this->mensajes = new ArrayCollection();
+        $this->participantes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,19 +254,33 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    public function getParticipante(): ?Participante
+    /**
+     * @return Collection|Participante[]
+     */
+    public function getParticipantes(): Collection
     {
-        return $this->participante;
+        return $this->participantes;
     }
 
-    public function setParticipante(Participante $participante): self
+    public function addParticipante(Participante $participante): self
     {
-        // set the owning side of the relation if necessary
-        if ($participante->getUser() !== $this) {
-            $participante->setUser($this);
+        if (!$this->participantes->contains($participante)) {
+            $this->participantes[] = $participante;
+            $participante->setUsuario($this);
         }
 
-        $this->participante = $participante;
+        return $this;
+    }
+
+    public function removeParticipante(Participante $participante): self
+    {
+        if ($this->participantes->contains($participante)) {
+            $this->participantes->removeElement($participante);
+            // set the owning side to null (unless already changed)
+            if ($participante->getUsuario() === $this) {
+                $participante->setUsuario(null);
+            }
+        }
 
         return $this;
     }

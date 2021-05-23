@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\Conversacion;
 use App\Entity\Participante;
 use App\Repository\ConversacionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\BrowserKit\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UsuarioRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\WebLink\Link;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/conversaciones", name="conversaciones")
@@ -43,55 +44,52 @@ class ConversacionController extends AbstractController
     /**
      * @Route("/", name="nuevasConversaciones", methods={"POST"})
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
+     * @throws \Exception     
      */
     public function index(Request $request)
     {
-        $otroUsuario = $request->get('otherUser', 0);
+        $otroUsuario = $request->get('otroUsuario', 0);
         $otroUsuario = $this->usuarioRepository->find($otroUsuario);
 
         if (is_null($otroUsuario)) {
             throw new \Exception("No se encuentra el usuario.");
         }
 
-        //Prohibir crear una conversación consigo mismo.
+        //Para no crear una conversacion contigo
         if ($otroUsuario->getId() === $this->getUser()->getId()) {
             throw new \Exception("No puedes crear una conversación contigo mismo.");
         }
 
-        //Comprobar si la conversación existe.
+        //Comprobar si la conversación existe
         $conversacion = $this->conversacionRepository->findConversacionByParticipantes(
             $otroUsuario->getId(),
             $this->getUser()->getId()
         );
 
         if (count($conversacion)) {
-            throw new \Exception("La conversación ya existe.");
+            throw new \Exception("Ya existe esta conversación.");
         }
 
         $conversacion = new Conversacion();
 
-        $participante = new Participante();
-        $participante->setUser($this->getUser());
-        $participante->addConversacion($conversacion);
+        $participante =  new Participante();
+        $participante->setUsuario($this->getUser());
+        $participante->setConversacion($conversacion);
 
-        $otroParticipante = new Participante();
-        $otroParticipante->setUser($otroUsuario);
-        $otroParticipante->addConversacion($conversacion);
+        $otroParticipante =  new Participante();
+        $otroParticipante->setUsuario($otroUsuario);
+        $otroParticipante->setConversacion($conversacion);
 
         $this->entityManager->getConnection()->beginTransaction();
-        try {
+        try{
             $this->entityManager->persist($conversacion);
-            $this->entityManager->persist($participante);
-            $this->entityManager->persist($otroParticipante);
-
-            $this->entityManager->flush();
-            $this->entityManager->commit();
+            $this->entityManager->flush($participante);
+            $this->entityManager->commit($otroParticipante);
         } catch (\Exception $e) {
             $this->entityManager->rollback();
             throw $e;
         }
-        $this->entityManager->commit();
 
         return $this->json([
             'id' => $conversacion->getId()
@@ -99,11 +97,17 @@ class ConversacionController extends AbstractController
     }
 
     /**
-     * @Route("/", name="getConversaciones", methods={"GET"})
+     * @Route("/", name="getConversations", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getConvs()
+    public function getConvs(Request $request)
     {
-        $conversacion = $this->conversacionRepository->findConversacionesByUsuarios($this->getUser()->getId());
-        return $this->json($conversacion);
+        $conversaciones = $this->conversacionRepository->findConversacionesByUsuario($this->getUser()->getId());
+
+        $hubUrl = $this->getParameter('mercure.default_hub');
+
+        $this->addLink($request, new Link('mercure', $hubUrl));
+        return $this->json($conversaciones);
     }
 }

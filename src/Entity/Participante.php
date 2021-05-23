@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ParticipanteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,64 +18,40 @@ class Participante
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Conversacion::class, mappedBy="participante", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="participantes")
      */
-    private $conversacion;
+    private $usuario;
 
     /**
-     * @ORM\OneToOne(targetEntity=Usuario::class, inversedBy="participante", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Conversacion::class, inversedBy="participantes")
      */
-    private $user;
-
-    public function __construct()
-    {
-        $this->conversacion = new ArrayCollection();
-    }
+    private $conversacion;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection|Conversacion[]
-     */
-    public function getConversacion(): Collection
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function getConversacion(): ?Conversacion
     {
         return $this->conversacion;
     }
 
-    public function addConversacion(Conversacion $conversacion): self
+    public function setConversacion(?Conversacion $conversacion): self
     {
-        if (!$this->conversacion->contains($conversacion)) {
-            $this->conversacion[] = $conversacion;
-            $conversacion->setParticipante($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConversacion(Conversacion $conversacion): self
-    {
-        if ($this->conversacion->removeElement($conversacion)) {
-            // set the owning side to null (unless already changed)
-            if ($conversacion->getParticipante() === $this) {
-                $conversacion->setParticipante(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getUser(): ?Usuario
-    {
-        return $this->user;
-    }
-
-    public function setUser(Usuario $user): self
-    {
-        $this->user = $user;
+        $this->conversacion = $conversacion;
 
         return $this;
     }
