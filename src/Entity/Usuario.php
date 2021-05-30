@@ -76,11 +76,17 @@ class Usuario implements UserInterface
      */
     private $mensajes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Noticia::class, mappedBy="usuario", orphanRemoval=true)
+     */
+    private $noticias;
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
         $this->mensajes = new ArrayCollection();
         $this->participantes = new ArrayCollection();
+        $this->noticias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,6 +315,36 @@ class Usuario implements UserInterface
             // set the owning side to null (unless already changed)
             if ($mensaje->getUsuario() === $this) {
                 $mensaje->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Noticia[]
+     */
+    public function getNoticias(): Collection
+    {
+        return $this->noticias;
+    }
+
+    public function addNoticia(Noticia $noticia): self
+    {
+        if (!$this->noticias->contains($noticia)) {
+            $this->noticias[] = $noticia;
+            $noticia->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNoticia(Noticia $noticia): self
+    {
+        if ($this->noticias->removeElement($noticia)) {
+            // set the owning side to null (unless already changed)
+            if ($noticia->getUsuario() === $this) {
+                $noticia->setUsuario(null);
             }
         }
 

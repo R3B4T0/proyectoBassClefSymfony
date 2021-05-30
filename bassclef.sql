@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2021 a las 12:23:56
+-- Tiempo de generación: 31-05-2021 a las 00:57:14
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -50,7 +50,9 @@ CREATE TABLE `doctrine_migration_versions` (
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 ('DoctrineMigrations\\Version20210325113949', '2021-03-25 12:40:09', 583),
-('DoctrineMigrations\\Version20210325114851', '2021-03-25 12:48:59', 166);
+('DoctrineMigrations\\Version20210325114851', '2021-03-25 12:48:59', 166),
+('DoctrineMigrations\\Version20210528105843', '2021-05-28 12:59:28', 126),
+('DoctrineMigrations\\Version20210530145039', '2021-05-30 16:51:06', 271);
 
 -- --------------------------------------------------------
 
@@ -65,6 +67,27 @@ CREATE TABLE `mensaje` (
   `creado_el` datetime(6) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `noticia`
+--
+
+CREATE TABLE `noticia` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `titulo` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contenido` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `noticia`
+--
+
+INSERT INTO `noticia` (`id`, `usuario_id`, `titulo`, `contenido`, `foto`) VALUES
+(1, 2, 'Concierto 5-Junio', 'asdghjasdjohgkljh<vzkljhvasjklbdtlkjgqweiuohgajbsvkljhiuoasetkjkhwelkrjyguioy876464ñlashjkdjkcjagfsdjhfjsaflkjklqeioi1o24yy4rthglkvajsñkljhgiausd\r\n\r\naksjdhglkjahsdgluhalcsxjhbjlkhasgdf\r\nañlshdflkghaioludhgf\r\nasdghlkjashdglj\r\n\r\nasdgkjhalkjsdgiuerywt78o643ljkashdlkvgasyudtgf', 'sevilla.jpg');
 
 -- --------------------------------------------------------
 
@@ -165,6 +188,13 @@ ALTER TABLE `mensaje`
   ADD KEY `creado_el_index` (`creado_el`);
 
 --
+-- Indices de la tabla `noticia`
+--
+ALTER TABLE `noticia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_31205F96DB38439E` (`usuario_id`);
+
+--
 -- Indices de la tabla `participante`
 --
 ALTER TABLE `participante`
@@ -203,6 +233,12 @@ ALTER TABLE `mensaje`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `noticia`
+--
+ALTER TABLE `noticia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `participante`
 --
 ALTER TABLE `participante`
@@ -236,6 +272,12 @@ ALTER TABLE `conversacion`
 ALTER TABLE `mensaje`
   ADD CONSTRAINT `FK_9B631D01ABD5A1D6` FOREIGN KEY (`conversacion_id`) REFERENCES `conversacion` (`id`),
   ADD CONSTRAINT `FK_9B631D01DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+
+--
+-- Filtros para la tabla `noticia`
+--
+ALTER TABLE `noticia`
+  ADD CONSTRAINT `FK_31205F96DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `participante`

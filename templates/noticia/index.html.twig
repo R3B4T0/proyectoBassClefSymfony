@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('/css/estilonoticias.css') }}" type="text/css">
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    {% if is_granted('ROLE_BANDA') == true %}
+        <a href="{{ path('nueva_noticia', {id:app.user.id}) }}" class="btn btn-primary" role="button">Insertar Noticia</a>
+    {% endif %}
+{% endif %}
+<main>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+            {% for noticia in noticias %}
+                <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" src="{{ asset('imagenes/noticias/') }}/{{ noticia.foto }}" with="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ noticia.titulo }}</h3>
+                        <p class="card-text">{{ noticia.contenido }}</p>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Ver Noticia</button>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No hay noticias aún</p>
+            {% endfor %}
+        </div>
+    </div>
+</main>    
+{% endblock %}
