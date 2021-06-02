@@ -6,7 +6,7 @@
             <div class="rounded py-2 px-3 mb-2" :class="[mensaje.mio ? 'bg-primary' : 'bg-light']">
                 <p class="text-small mb-0" :class="[mensaje.mio ? 'text-white' : 'text-muted']">{{ mensaje.contenido }}</p>
             </div>
-            <p class="small text-muted">{{ fecha }}</p>
+            <p class="small text-muted">{{ date }}</p>
         </div>
     </div>
 </template>

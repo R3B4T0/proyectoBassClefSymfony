@@ -1,6 +1,6 @@
 <template>
     <div class="col-7 px-0">
-        <div class="px-4 py-5 chat-box bg-white" ref="messagesBody">
+        <div class="px-4 py-5 chat-box bg-white" ref="mensajesBody">
             <template v-for="(mensaje, index, key) in MENSAJES">
                 <Mensaje :mensaje="mensaje"/>
             </template>
