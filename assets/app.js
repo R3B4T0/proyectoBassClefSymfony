@@ -15,8 +15,8 @@ const routes = [
         component: Blank
     },
     {
-        name: 'conversation',
-        path: '/conversation/:id',
+        name: 'conversacion',
+        path: '/conversacion/:id',
         component: Right
     }
 ];

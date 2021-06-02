@@ -8,8 +8,8 @@
 
             <div class="messages-box">
                 <div class="list-group rounded-0">
-                    <template v-for="(conversation, index, key) in CONVERSATIONS">
-                        <Conversation :conversation="conversation" />
+                    <template v-for="(conversacion, index, key) in CONVERSACIONES">
+                        <Conversacion :conversacion="conversacion" />
                     </template>
                 </div>
             </div>
@@ -19,28 +19,28 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import Conversation from "./Conversation";
+    import Conversacion from "./Conversacion";
     export default {
-        components: {Conversation},
+        components: {Conversacion},
         computed: {
-          ...mapGetters(["CONVERSATIONS", "HUBURL", "USERNAME"])
+          ...mapGetters(["CONVERSACIONES", "HUBURL", "USERNAME"])
         },
         methods: {
-            updateConversations(data) {
-                this.$store.commit("UPDATE_CONVERSATIONS", data)
+            updateConversaciones(data) {
+                this.$store.commit("UPDATE_CONVERSACIONES", data)
             }
         },
         mounted() {
             const vm = this;
-            this.$store.dispatch("GET_CONVERSATIONS")
+            this.$store.dispatch("GET_CONVERSACIONES")
                 .then(() => {
                     let url = new URL(this.HUBURL);
-                    url.searchParams.append('topic', `/conversations/${this.USERNAME}`)
+                    url.searchParams.append('topic', `/conversaciones/${this.USERNAME}`)
                     const eventSource = new EventSource(url, {
                         withCredentials: true
                     })
                     eventSource.onmessage = function (event) {
-                        vm.updateConversations(JSON.parse(event.data))
+                        vm.updateConversaciones(JSON.parse(event.data))
                     }
                 })
         }
