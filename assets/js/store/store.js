@@ -3,11 +3,11 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import conversation from "./modules/conversation";
-import user from "./modules/user";
+import conversacion from "./modules/conversacion.js";
+import usuario from "./modules/usuario.js";
 export default new Vuex.Store({
     modules: {
-        conversation,
-        user
+        conversacion,
+        usuario
     }
 })

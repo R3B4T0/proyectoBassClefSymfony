@@ -1,0 +1,208 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('/css/estiloinicio.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('/css/map.css') }}" type="text/css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/plugins.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/main1.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('./js/map.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/plugins.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/main.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    <!-- PRELOADER -->
+        <div class="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- /PRELOADER -->
+    
+        <!-- IMAGE CONTAINER -->
+        <div class="image-container">       
+            <div class="background-img"></div>
+        </div>
+        <!-- /IMAGE CONTAINER -->
+
+        <!-- CONTENT AREA -->
+        <div class="content-area">
+            <!-- CONTENT AREA INNER --> 
+            <div class="content-area-inner">
+                <!-- INTRO -->
+                <section id="intro">
+                    <!-- CONTAINER MID -->
+                    <div class="container-mid">
+                        <!-- ANIMATION CONTAINER -->
+                        <div class="animation-container animation-fade-right" data-animation-delay="0">
+                            <h1>Soy David Rebato, Desarrollador de Aplicaciones Web</h1>
+                        </div>
+                        <!-- /ANIMATION CONTAINER -->
+                        <!-- ANIMATION CONTAINER -->
+                        <div class="animation-container animation-fade-right" data-animation-delay="200">
+                            <a href="#about" class="smooth-scroll">Leer más<div class="circle"><i class="fa fa-angle-down" aria-hidden="true"></i></div></a>
+                        </div>
+                        <!-- /ANIMATION CONTAINER -->
+                    </div>
+                    <!-- /CONTAINER MID -->
+                </section>
+                <!-- /INTRO -->
+                <!-- ABOUT -->
+                <section id="about">
+                    <h3 class="headline scroll-animated">Sobre Mi</h3>
+                    <p class="scroll-animated">Me llamo David Rebato y soy un estudiante en prácticas del IES Juan Bosco (Alcázar de San Juán) del módulo Desarrollo de Aplicaciones Web</p>
+                    <p class="scroll-animated">Desde pequeño soy un apasionado de la Infórmatica. Siempre veía a mi padre sentado al ordenador y poco a poco me iba picando la curisiodad. Hasta ahora que he estudiado todo lo que me apasiona y todavía sigo aprendiendo tecnologías nuevas.</p>
+                
+                    <!-- CLIENTS
+                    <div class="row clients scroll-animated">
+                        <div class="col-md-3 col-xs-6"><img class="img-responsive" src="assets/img/clients/client-1.png" alt="client"></div>
+                        <div class="col-md-3 col-xs-6"><img class="img-responsive" src="assets/img/clients/client-2.png" alt="client"></div>
+                        <div class="col-md-3 col-xs-6"><img class="img-responsive" src="assets/img/clients/client-3.png" alt="client"></div>
+                        <div class="col-md-3 col-xs-6"><img class="img-responsive" src="assets/img/clients/client-4.png" alt="client"></div> 
+                    </div>
+                     /CLIENTS -->
+                </section>
+                <!-- /ABOUT -->
+                
+                
+                <!-- SERVICE -->
+                <section id="service">
+                    <h3 class="headline scroll-animated">Conocimientos</h3>
+                    <!-- SERVICE LIST -->
+                    <ul class="services-list">
+                        <!-- SERVICE ITEM -->
+                        <li class="service-item scroll-animated">
+                            <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapse-item-1" aria-expanded="false">PHP</button>
+                            <!-- COLLAPSE CONTENT -->
+                            <div class="collapse" id="collapse-item-1">
+                                <!-- COLLAPSE CONTENT INNER -->
+                                <div class="well">
+                                    <p>En el curso de Desarrollo de Aplicaciones Web he obtenido muchos conocimientos acerca de PHP y del Framework Symfony, además me he sacado varios cursos gracias a las BecasOW de OpenWebinars.</p>
+                                </div>
+                                <!-- /COLLAPSE CONTENT INNER -->
+                            </div>
+                            <!-- /COLLAPSE CONTENT -->
+                        </li>
+                        <!-- /SERVICE ITEM -->
+                        
+                        <!-- SERVICE ITEM -->
+                        <li class="service-item scroll-animated">
+                            <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapse-item-2" aria-expanded="false">Java</button>
+                            <!-- COLLAPSE CONTENT -->
+                            <div class="collapse" id="collapse-item-2">
+                                <!-- COLLAPSE CONTENT INNER -->
+                                <div class="well">
+                                   <p>Gracias al curso he aprendido varios lenguages de programación basados en Java como JavaScript, Spring, JavaEE, como también el Framework Angular. Gracias también a las prácticas he obtenido conocimientos acerca de HL7, FHIR, Camel K.</p>
+                                </div>
+                                <!-- /COLLAPSE CONTENT INNER -->
+                            </div>
+                            <!-- /COLLAPSE CONTENT -->
+                        </li>
+                        <!-- /SERVICE ITEM -->
+                        
+                        <!-- SERVICE ITEM -->
+                        <li class="service-item scroll-animated">
+                            <button class="btn btn-primary collapsed" type="button" data-toggle="collapse" data-target="#collapse-item-3" aria-expanded="false">HTML y CSS</button>
+                            <!-- COLLAPSE CONTENT -->
+                            <div class="collapse" id="collapse-item-3">
+                                <!-- COLLAPSE CONTENT INNER -->
+                                <div class="well">
+                                    <p>También tengo conocimientos de HTML, CSS y Bootstrap, gracias al curso de Desarrollo de Aplicaciones Web</p>
+                                </div>
+                                <!-- /COLLAPSE CONTENT INNER -->
+                            </div>
+                            <!-- /COLLAPSE CONTENT -->
+                        </li>
+                        <!-- /SERVICE ITEM -->
+                    </ul>
+                    <!-- /SERVICE LIST -->
+                </section>
+                <!-- /SERVICE -->
+                
+                <!-- WORK -->
+                <section id="work">
+                    <h3 class="headline scroll-animated">Experiencia</h3>
+                    <!-- SHOWCASE -->
+                    <div class="showcase">
+                        <!-- ITEM -->
+                        <div class="item scroll-animated">
+                            <!-- LIGHTBOX LINK -->
+                            <a href="#" data-featherlight="#item-1-lightbox">
+                                <!-- INFO -->
+                                <div class="info">
+                                    <!-- CONTAINER MID -->
+                                    <div class="container-mid">
+                                        <h5>Indra</h5>
+                                        <p>Desarrollo de la Aplicación BDAC</p>
+                                    </div>
+                                    <!-- /CONTAINER MID -->
+                                </div>
+                                <!-- /INFO -->
+                                <div class="background-image" style="background-image: url({{ asset('/imagenes/indra.jpg') }})"></div>
+                            </a>
+                            <!-- /LIGHTBOX LINK -->
+                            
+                            <!-- LIGHTBOX -->
+                            <div id="item-1-lightbox" class="work-lightbox">
+                                <img class="img-responsive" src="{{ asset('/imagenes/indra.jpg') }}" alt="image">
+                                <h3>Indra</h3>
+                                <p class="subline"></p>
+                                <p>Entré en el equipo de Migración en el proyecto de la aplicación BDAC</p>
+                                <p>Este proyecto tiene el objetivo de la interoperabilidad de todas las aplicaciones de las Islas Baleares. El desarrollo de mi trabajo se ejecuta con la tecnologías de HL7, FHIR y Camel K.</p>
+                            </div>
+                            <!-- /LIGHTBOX -->
+                        </div>
+                        <!-- /ITEM -->
+                    </div>
+                    <!-- /SHOWCASE -->
+                </section>
+                <!-- /WORK -->
+                
+                <!-- CONTACT -->
+                <section id="contact">
+                    <h3 class="headline scroll-animated">Contáctame!</h3>
+                    <!-- CONTACT FORM --> 
+                    <form id="contact-form" action="" method="post">
+                        <input id="contact-form-name" type="text" name="name" class="form-control scroll-animated" placeholder="* Nombre">
+                        <input id="contact-form-email" type="text" name="email" class="form-control scroll-animated" placeholder="* Email">
+                        <!-- PHANTOM ELEMENT ( HONEYPOT CAPTCHA FOR SECURITY ) -->
+                        <div class="fhp-input"><input id="contact-form-company" type="text" name="company" class="form-control"></div>
+                        <!-- /PHANTOM ELEMENT ( HONEYPOT CAPTCHA FOR SECURITY ) -->
+                        <textarea id="contact-form-message" name="message" class="form-control scroll-animated" placeholder="* Mensaje"></textarea>
+                        <button type="submit" class="form-control scroll-animated">Enviar Mensaje<div class="circle"><i class="fa fa-angle-right" aria-hidden="true"></i></div></button>
+                        <div class="success-message"><i class="fa fa-check" aria-hidden="true"></i>El email se ha enviado con éxito!</div>
+                    </form>
+                    <br><br>
+                    <!--The div element for the map -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1516.2771186758023!2d-3.642004359024433!3d40.52934280858277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422c5d85fbb567%3A0x49a94bc39a610f88!2sIndra!5e0!3m2!1ses!2ses!4v1623161939354!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- /CONTACT FORM --> 
+                </section>
+                <!-- /CONTACT -->
+                
+                <!-- FOOTER -->
+                <section id="footer">
+                    <!-- SOCIAL ICONS -->
+                    <ul class="social-icons scroll-animated">
+                        <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                    <!-- /SOCIAL ICONS -->
+                    <p class="scroll-animated">© 2021 BassClef | Design by <a href="https://templatefoundation.com">David Rebato</a></p>
+                </section>
+                <!-- /FOOTER -->
+            </div>
+            <!-- /CONTENT AREA INNER -->
+        </div>
+        <!-- /CONTENT AREA -->
+{% endblock %}

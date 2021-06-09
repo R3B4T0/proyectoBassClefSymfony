@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ConversacionController!{% endblock %}
-
 {% block head %}
     {% block stylesheet %}
         {{ parent() }}
@@ -18,5 +16,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

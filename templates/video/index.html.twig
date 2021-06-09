@@ -12,6 +12,18 @@
 
 {% block body %}
     {% if app.user %}
-        {{ form(form) }}
+        <div class="container">
+            <div class="form">
+                <div class="note">
+                    <img src="{{ asset('/imagenes/navegacion.png') }}">
+                </div>
+
+                <div class="form-content">
+                    <div class="row">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

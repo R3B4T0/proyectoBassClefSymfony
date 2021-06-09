@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2021 a las 00:57:14
+-- Tiempo de generación: 09-06-2021 a las 15:41:31
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -87,7 +87,8 @@ CREATE TABLE `noticia` (
 --
 
 INSERT INTO `noticia` (`id`, `usuario_id`, `titulo`, `contenido`, `foto`) VALUES
-(1, 2, 'Concierto 5-Junio', 'asdghjasdjohgkljh<vzkljhvasjklbdtlkjgqweiuohgajbsvkljhiuoasetkjkhwelkrjyguioy876464ñlashjkdjkcjagfsdjhfjsaflkjklqeioi1o24yy4rthglkvajsñkljhgiausd\r\n\r\naksjdhglkjahsdgluhalcsxjhbjlkhasgdf\r\nañlshdflkghaioludhgf\r\nasdghlkjashdglj\r\n\r\nasdgkjhalkjsdgiuerywt78o643ljkashdlkvgasyudtgf', 'sevilla.jpg');
+(1, 2, 'Concierto 5-Junio', 'asdghjasdjohgkljh<vzkljhvasjklbdtlkjgqweiuohgajbsvkljhiuoasetkjkhwelkrjyguioy876464ñlashjkdjkcjagfsdjhfjsaflkjklqeioi1o24yy4rthglkvajsñkljhgiausd\r\n\r\naksjdhglkjahsdgluhalcsxjhbjlkhasgdf\r\nañlshdflkghaioludhgf\r\nasdghlkjashdglj\r\n\r\nasdgkjhalkjsdgiuerywt78o643ljkashdlkvgasyudtgf', 'sevilla.jpg'),
+(2, 2, 'Concierto mañana', 'klajshvkjhasdjkhfjgqwejhgfhjakjvhljkahewr\r\nasdjghlkjashdgjklhasdjkghlirjeuhwquighiuhakjsdvbajbvjhasdjfhas\r\nañsdjvklj\r\nakjshdgkjlhasdkljgfhlaksdçq\r\nwqewryuiy naskmhdflkjhqwe jherfqwuijhywetf', '60bdddde4656a.png');
 
 -- --------------------------------------------------------
 
@@ -130,11 +131,12 @@ INSERT INTO `usuario` (`id`, `email`, `roles`, `password`, `nombre`, `apellidos`
 (4, 'c@r.com', '[\"ROLE_MUSICO\"]', '$argon2id$v=19$m=65536,t=4,p=1$NXFSTG5LMGpYdHlFakYyeQ$t4+0xnrwI/i1iCIOykEnwjXRQQ3k13gwPPtkrvtDjKw', 'Cristino', 'Rebato Diana', '604dd56504a65.jpg', 'Soy el mejor músico dle mundo', '623456789'),
 (5, 'a@d.com', '[\"ROLE_MUSICO\",\"ROLE_BANDA\"]', '$argon2id$v=19$m=65536,t=4,p=1$OS9lcHc3V0g5cGlVRE5mUA$52zoZkONrabUavhHHXZFDRUW0fNmt1h7W+BWFWW8TN0', 'Amalia', 'Diana Alaminos', '604de0f322f7d.png', 'Soy la mejor directora del mundo.', '623456789'),
 (6, 'c@l.com', '[\"ROLE_MUSICO\"]', '$argon2id$v=19$m=65536,t=4,p=1$SkRNTFFNMjNrN25Gem9OZQ$p5DY3adRXoqM48SLvrMeF9AmtHjXQl0FnP4BCfe8ua0', 'Cristino', 'Rebato Lara', '604de371bb733.jpg', 'asdgasghdhrdsfhsdfhsdfhasgasg', '623456789'),
-(7, 'd@ro.com', '[\"ROLE_MUSICO\"]', '1234', 'David', 'Rodriguez', 'user.jpg', NULL, '623456789'),
-(8, 'agjh@jkgf.com', '{\"ROLE_MUSICO\":\"ROLE_MUSICO\"}', '1234', 'shdfjksd', 'hjgajkh', 'C:\\fakepath\\user.png', NULL, '623456789'),
-(9, 'causdyh@gajk.com', '[\"ROLE_MUSICO\"]', '1234', 'jkgajkdhs', 'aasdg', 'C:\\fakepath\\pomerania.png', NULL, '623456789'),
-(10, 'pepe@p.com', '[\"ROLE_MUSICO\"]', '1234', 'Pepe', 'Pepon', 'C:\\fakepath\\user.png', NULL, '623456789'),
-(11, 'manolo@m.com', '[\"ROLE_MUSICO\"]', '1234', 'Manolo', 'Gafotas', 'C:\\fakepath\\pomerania.png', NULL, '623456789');
+(7, 'd@ro.com', '[\"ROLE_MUSICO\"]', '1234', 'David', 'Rodriguez', 'moto.jpg', NULL, '623456789'),
+(8, 'agjh@jkgf.com', '{\"ROLE_MUSICO\":\"ROLE_MUSICO\"}', '1234', 'shdfjksd', 'hjgajkh', 'user.png', NULL, '623456789'),
+(9, 'causdyh@gajk.com', '[\"ROLE_MUSICO\"]', '1234', 'jkgajkdhs', 'aasdg', 'pomerania.png', NULL, '623456789'),
+(10, 'pepe@p.com', '[\"ROLE_MUSICO\"]', '1234', 'Pepe', 'Pepon', 'user.png', NULL, '623456789'),
+(11, 'manolo@m.com', '[\"ROLE_MUSICO\"]', '1234', 'Manolo', 'Gafotas', 'pomerania.png', NULL, '623456789'),
+(12, 'nhhjdf@ngh.com', '[\"ROLE_BANDA\"]', '$argon2id$v=19$m=65536,t=4,p=1$XVHiGZCp6Mgj4QpUAjafYw$SHCovzDr27r4O13oDYx1T2k8Gk6uNgXH698+SfRUj+4', 'Rosario', 'de Cádiz', '60bf59a2b14b9.jpg', NULL, '687578783');
 
 -- --------------------------------------------------------
 
@@ -236,7 +238,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `noticia`
 --
 ALTER TABLE `noticia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `participante`
@@ -248,7 +250,7 @@ ALTER TABLE `participante`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `video`
@@ -283,8 +285,8 @@ ALTER TABLE `noticia`
 -- Filtros para la tabla `participante`
 --
 ALTER TABLE `participante`
-  ADD CONSTRAINT `FK_85BDC5C3ABD5A1D6` FOREIGN KEY (`conversacion_id`) REFERENCES `conversacion` (`id`),
-  ADD CONSTRAINT `FK_85BDC5C3DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `FK_85BDC5C3ABD5A1D6` FOREIGN KEY (`conversacion_id`) REFERENCES `conversacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_85BDC5C3DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `video`

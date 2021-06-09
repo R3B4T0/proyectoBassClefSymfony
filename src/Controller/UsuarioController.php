@@ -4,11 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Usuario;
 use App\Entity\Video;
-use DateInterval;
-use DateTime;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Token\Builder;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +18,6 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\HttpFoundation\Cookie;
 
 class UsuarioController extends AbstractController
 {
@@ -83,6 +77,9 @@ class UsuarioController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $usuario = $form->getData();
             $foto = $form->get('foto')->getData();
+            if ($foto == null || $foto == '') {
+                $usuario->setFoto('imagenes/user.png');
+            }
             if ($foto) {
                 $nuevo_nombre = uniqid() . '.' . $foto->guessExtension();
                 try {
@@ -232,38 +229,9 @@ class UsuarioController extends AbstractController
     }
 
     /**
-     * @Route("/chat", name="chat")
+     * @Route("/sobre-mi", name="sobre-mi")
      */
-    public function chat()
-    {
-        $username = $this->getUser()->getUsername();
-        $token = (new Builder())
-            ->withClaim('mercure', ['subscribe' => [sprintf("/%s", $username)]])
-            ->getToken(
-                new Sha256(),
-                new Key($this->getParameter('mercure_secret_key'))
-            )
-        ;
-
-        $response = $this->render('conversacion/index.html.twig', [
-            'controller_name' => 'UsuarioController'
-        ]);
-
-        $response->headers->setCookie(
-            new Cookie(
-                'mercureAuthorization',
-                $token,
-                (new \DateTime())
-                ->add(new \DateInterval('PT2H')),
-                '/.well-known/mercure',
-                null,
-                false,
-                true,
-                false,
-                'strict'
-            )
-        );
-
-        return $response;
+    public function sobreMi() {
+        return $this->render('usuario/sobre_mi.html.twig');
     }
 }

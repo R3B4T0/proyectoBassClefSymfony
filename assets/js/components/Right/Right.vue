@@ -12,7 +12,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import Mensaje from "./Mensaje";
+    import Mensaje from "./Mensaje.vue";
     import Input from "./Input";
     export default {
         data: () => ({

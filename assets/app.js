@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from "./store/store";
+import store from "./js/store/store";
 
-import App from "./components/App.vue";
-import Blank from "./components/Right/Blank";
-import Right from "./components/Right/Right";
+import App from "./js/components/App.vue";
+import Blank from "./js/components/Right/Blank";
+import Right from "./js/components/Right/Right";
 
 Vue.use(VueRouter)
 

@@ -8,12 +8,29 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <link rel="stylesheet" href="{{ asset('/css/estiloregistro.css') }}" type="text/css">
     {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% endblock %}
 {% endblock %}
 
 {% block body %}
     {% if app.user %}
         {% if is_granted('ROLE_BANDA') == true %}
-            {{ form(form) }}
+            <div class="container">
+                <div class="form">
+                    <div class="note">
+                        <img src="{{ asset('/imagenes/navegacion.png') }}">
+                    </div>
+
+                    <div class="form-content">
+                        <div class="row">
+                            {{ form(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% else %}
             <p>No tienes permisos para insertar una noticia nueva</p>
         {% endif %}
