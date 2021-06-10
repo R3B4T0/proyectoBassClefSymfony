@@ -6,6 +6,7 @@ use App\Entity\Conversacion;
 use App\Entity\Mensaje;
 use App\Repository\MensajeRepository;
 use App\Repository\UsuarioRepository;
+use App\Repository\ParticipanteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,7 +50,8 @@ class MensajeController extends AbstractController
 
     public function __construct(EntityManagerInterface $entityManager, 
                                 MensajeRepository $mensajeRepository, 
-                                UsuarioRepository $usuarioRepository, 
+                                UsuarioRepository $usuarioRepository,
+                                ParticipanteRepository $participanteRepository, 
                                 PublisherInterface $publisher) 
     {
         $this->entityManager = $entityManager;
@@ -60,7 +62,7 @@ class MensajeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="getMensajes", methods={"GET"})
+     * @Route("/{id}", name="getMensajes", methods={"GET"}, requirements={"id":"\d+"})
      * @param Request $request
      * @param Conversacion $conversacion
      * @return Response

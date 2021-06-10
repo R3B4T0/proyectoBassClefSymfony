@@ -39,7 +39,7 @@
                     const eventSource = new EventSource(url, {
                         withCredentials: true
                     })
-                    eventSource.onmessage = function (event) {
+                    eventSource.onmensaje = function (event) {
                         vm.updateConversaciones(JSON.parse(event.data))
                     }
                 })

@@ -2,7 +2,7 @@
     <div class="col-7 px-0">
         <div class="px-4 py-5 chat-box bg-white" ref="mensajesBody">
             <template v-for="(mensaje, index, key) in MENSAJES">
-                <Mensaje :mensaje="mensaje"/>
+                <Mensaje :mensaje="mensaje" />
             </template>
         </div>
 
@@ -12,8 +12,9 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import Mensaje from "./Mensaje.vue";
+    import Mensaje from "./Mensaje";
     import Input from "./Input";
+
     export default {
         data: () => ({
             eventSource: null
@@ -47,10 +48,12 @@
                         this.eventSource = new EventSource(url, {
                             withCredentials: true
                         })
-                        this.eventSource.onmessage = function (event) {
+                        
+                        this.eventSource.onmensaje = function (event) {
                             vm.addMensaje(JSON.parse(event.data))
                         }
                     }
+
                 })
         },
         watch: {

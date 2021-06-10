@@ -33,7 +33,7 @@ class ChatController extends AbstractController
         ]);
 
         $response->headers->setCookie(
-            new Cookie(
+            Cookie::create(
                 'mercureAuthorization',
                 $token->toString(),
                 (new \DateTime())

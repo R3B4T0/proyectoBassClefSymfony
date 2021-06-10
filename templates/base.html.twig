@@ -47,6 +47,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             {% if app.user %}
                                 <a class="dropdown-item" href='/ver_perfil/{{ app.user.id }}' routerLinkActive="active text-dark sombra"><img class="rounded-circle" src="{{ asset('/imagenes/') }}/{{ app.user.foto }}" height="50px" width="50px"> {{app.user.nombre}} {{app.user.apellidos}}</a>
+                                <a class="dropdown-item" href='/chat'>Chat</a>
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar Sesión <i class="fas fa-sign-out-alt" routerLinkActive='fa-spin'></i></a>
                             {% else %}
                                 <a class="dropdown-item" href="/registrar" routerLinkActive="active text-dark sombra">Registro</a>

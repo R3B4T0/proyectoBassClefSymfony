@@ -97,7 +97,7 @@ class ConversacionController extends AbstractController
     }
 
     /**
-     * @Route("/", name="getConversations", methods={"GET"})
+     * @Route("/", name="getConversaciones", methods={"GET"})
      * @param Request $request
      * @return JsonResponse
      */

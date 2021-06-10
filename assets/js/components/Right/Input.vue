@@ -13,10 +13,10 @@
 <script>
     export default {
         data: () => ({
-            content: ''
+            contenido: ''
         }),
         methods: {
-            enviarMensaje: () =>{
+            enviarMensaje() {
                 this.$store.dispatch("POST_MENSAJE", {
                     conversacionId: this.$route.params.id,
                     contenido: this.contenido

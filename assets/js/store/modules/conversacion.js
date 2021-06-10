@@ -12,7 +12,7 @@ export default {
             })
         },
         MENSAJES: state => conversacionId => {
-            return state.conversacionesId.find(i => i.conversacionId === conversacionId).mensajes
+            return state.conversaciones.find(i => i.conversacionId === conversacionId).mensajes
         },
         HUBURL: state => state.hubUrl
     },
@@ -44,7 +44,7 @@ export default {
     },
     actions: {
         GET_CONVERSACIONES: ({commit}) => {
-            return fetch(`/conversaciones`)
+            return fetch('/conversaciones')
                 .then(result => {
                     const hubUrl = result.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1]
                     commit("SET_HUBURL", hubUrl)
